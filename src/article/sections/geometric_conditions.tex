@@ -1,82 +1,69 @@
-\section{Достаточные геометрические условия непрерывного
-глобального покрытия}
+\section{Sufficient Geometric Conditions for Continuous Global Coverage}
 \label{sec:geometric_conditions}
 
-Для обеспечения глобального покрытия необходимо выполнение трех групп
-условий, учитывающих геометрию взаимного расположения плоскостей.
-Они включают коорбитальные, ретроградные и полярные условия. Следует
-отметить, что представленные условия являются достаточными для
-сферической модели Земли. Учитывая, что эллипсоид Земли вписан в данную
-сферу (из-за сжатия у полюсов), выполнение представленных неравенств
-гарантирует полное покрытие и для реальной эллипсоидальной модели.
+To achieve global coverage, three groups of geometric conditions must be satisfied, accounting for
+the mutual arrangement of the orbital planes. These include co-orbital, retrograde, and polar
+conditions. It is important to note that these conditions are sufficient for the spherical Earth
+model. Since the Earth's ellipsoid is inscribed within this sphere,
+satisfying these inequalities guarantees full coverage for the actual ellipsoidal model as well.
 
-\subsection{Условия на коорбитальные плоскости}
+\subsection{Conditions for Co-Orbital Planes}
 
-Коорбитальными назовем такие соседние плоскости орбит, в которых КА
-движутся в одном направлении. Для предотвращения разрыва покрытия
-между этими плоскостями необходимо, чтобы расстояние между ними не
-превышало максимально допустимую величину \(D\). Геометрически это
-расстояние определяется как сумма половины полосы покрытия одной
-плоскости и радиуса зоны обзора соседней:
+Let adjacent orbital planes be called co-orbital if the spacecraft in them move in the same
+direction. To prevent coverage gaps between these planes, the distance between them must not exceed
+the maximum allowable value \(D\). Geometrically, this distance is defined as the sum of half the
+coverage strip of one plane and the field-of-view radius of the adjacent one:
 \begin{equation}
     D = \lambda_{\text{street}} + \theta.
 \end{equation}
 
-На основе векторов нормалей к плоскостям орбит, угловое расстояние между
-двумя коорбитальными плоскостями \(i_{rel}\) через параметры наклонения и
-разности ДВУ выражается как:
+Based on the normal vectors to the orbital planes, the angular distance between two co-orbital
+planes \(i_{rel}\) is expressed through the inclination and the RAAN difference as:
 \begin{equation}
     \cos i_{rel} = \cos^2 i + \cos(\Delta\Omega) \sin^2 i.
 \end{equation}
-Приравнивая полученное расстояние к максимально допустимому
-(\(i_{rel} = D\)), получаем ограничение на максимальную разницу ДВУ для
-коорбитальных плоскостей:
+Equating this distance to the maximum allowable value (\(i_{rel} = D\)), we obtain the restriction
+on the maximum RAAN difference for co-orbital planes:
 \begin{equation}\label{eq:delta_omega_max}
     \Delta\Omega_{\text{max}} = \arccos\left(\frac{\cos D - \cos^2 i}{\sin^2 i}\right).
 \end{equation}
-Выбор \(\Delta\Omega \leq \Delta\Omega_{\text{max}}\) обеспечивает отсутствие
-разрывов между соседними плоскостями при сонаправленном движении КА.
+Choosing \(\Delta\Omega \leq \Delta\Omega_{\text{max}}\) ensures that no gaps in coorbital planes.
 
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{pictures/phase_shift.png}
-    \caption{Схема фазового сдвига между соседними плоскостями орбит}
+    \caption{Diagram of the phase shift between adjacent orbital planes}
     \label{fig:phase_shift}
 \end{figure}
 
-Также для коорбитальных плоскостей следует учитывать влияние фазового
-сдвига \(f\). Он определяет относительное смещение трасс вдоль стыка двух
-соседних плоскостей и, следовательно, влияет на то, как будут
-перекрываться полосы покрытия. На рис.~\ref{fig:phase_shift} показана
-схема взаимного расположения орбит при фазовом сдвиге. Рассмотрены две
-соседние коорбитальные плоскости с разницей долгот восходящих узлов
-$\Delta\Omega$. Будем считать, что выбранная $\Delta\Omega$ принадлежит
-допустимому диапазону ДВУ. Угловое расстояние между этими плоскостями
-обозначим $i_{rel}$.
+Furthermore, for co-orbital planes, the influence of the phase shift \(f\) must be considered. This
+shift determines the relative offset of the ground tracks along the intersection of two adjacent
+planes and, consequently, how the coverage strips overlap. Figure~\ref{fig:phase_shift} illustrates
+the mutual geometry of the orbits with a phase shift. We consider two adjacent co-orbital planes
+with a RAAN difference of $\Delta\Omega$. We assume that the chosen $\Delta\Omega$ lies within the
+allowable RAAN range. The angular distance between these planes is denoted as $i_{rel}$.
 
-Поскольку ширина полосы покрытия одной орбиты равна
-$\lambda_{\text{street}}$, угловое расстояние от внешней границы полосы
-покрытия одной орбиты до соседней на дуге $i_{rel}$ составит:
+Since the coverage strip of a single orbit has a width of $\lambda_{\text{street}}$, the angular
+distance from the outer edge of one orbit's coverage strip to the adjacent orbit along the arc
+$i_{rel}$ is:
 \begin{equation}
     d = i_{rel} - \lambda_{\text{street}}.
 \end{equation}
 
-Для того чтобы не произошло разрыва покрытия, КА на соседней орбите должен
-находиться достаточно близко к границе полосы покрытия первой орбиты.
-Геометрически это условие означает, что угловое расстояние между КА на
-соседней орбите и границей полосы не должно превышать центральный угол зоны
-обзора $\theta$.
+To avoid a coverage gap, the spacecraft on the adjacent orbit must be positioned sufficiently close
+to the boundary of the first orbit's coverage strip. Geometrically, this implies that the angular
+distance between the spacecraft on the adjacent orbit and the strip boundary must not exceed the
+central field-of-view angle $\theta$.
 
-На орбите слева от пересечения дуги $i_{rel}$ вниз на $\Delta u/2$ находится
-первый КА, вверх на $\Delta u/2$ находится второй КА. Обозначим допустимый
-диапазон аргумента широты КА на соседней орбите как $u_{3,\min}$ и
-$u_{3,\max}$.
+On the left orbit, the first spacecraft is located \(\Delta u/2\) downward from the intersection of
+the arc \(i_{rel}\), while the second spacecraft is located \(\Delta u/2\) upward. Let us denote the
+allowable range of the argument of latitude for the spacecraft on the adjacent orbit as
+\(u_{3,\min}\) and \(u_{3,\max}\).
 
-Отсчитываем фазовый сдвиг от первого КА на левой орбите вверх по
-направлению движения КА. Если $u_3$ принадлежит диапазону
-$[u_{3,\min}, u_{3,\max}]$, то разрывов в покрытии между соседними
-плоскостями происходить не будет. Выразим тогда допустимые сдвиги фаз:
+We measure the phase shift from the first spacecraft on the left orbit upwards along the direction
+of motion. If \(u_3\) falls within the range \([u_{3,\min}, u_{3,\max}]\), no coverage gaps will
+occur between the adjacent planes. The allowable phase shifts are then expressed as:
 \begin{equation}\label{eq:phase_shift}
     f_{max} = \frac{\Delta u}{2} + \beta - 2\alpha
 \end{equation}
@@ -84,19 +71,17 @@ $[u_{3,\min}, u_{3,\max}]$, то разрывов в покрытии между
     f_{min} = \frac{\Delta u}{2} - \beta - 2\alpha
 \end{equation}
 
-Из сферической геометрии можем выразить допустимое отклонение по
-аргументу широты $\beta$ и смещение $\alpha$.
+From spherical geometry, we can express the allowable deviation in argument of latitude $\beta$ and
+the offset $\alpha$:
 \begin{equation}
     \beta = \arccos \left(  \frac{\cos \theta}{\cos d} \right)
 \end{equation}
-
 \begin{equation}
     \alpha = \arccos \left( \frac{\cos(\frac{\Delta\Omega}{2})}{\cos(\frac{i_{rel}}{2})} \right)
 \end{equation}
 
-
-Подставляя выражения для \(\alpha\) и \(\beta\) в \eqref{eq:phase_shift}, 
-получаем итоговые аналитические формулы для расчета границ фазового сдвига:
+By substituting the expressions for \(\alpha\) and \(\beta\) into \eqref{eq:phase_shift}, we obtain
+the final analytical formulas for calculating the phase shift boundaries:
 \begin{equation}
     f_{max} = \frac{\Delta u}{2} + \arccos \left( \frac{\cos \theta}{\cos d} \right)
     - 2 \arccos \left( \frac{\cos\left(\frac{\Delta\Omega}{2}\right)}{\cos\left(
@@ -108,66 +93,58 @@ $[u_{3,\min}, u_{3,\max}]$, то разрывов в покрытии между
         \frac{i_{rel}}{2}\right)} \right)
 \end{equation}
 
-Выбор фазового сдвига \(f \in [f_{\min}, f_{\max}]\) гарантирует
-непрерывность покрытия на стыках коорбитальных плоскостей. Таким образом,
-при соблюдении указанных ограничений разрывы покрытия между соседними
-коорбитальными плоскостями не возникают.
+Selecting a phase shift \(f \in [f_{\min}, f_{\max}]\) guarantees continuous coverage between
+co-orbital planes.
 
 
-\subsection{Условия на ретроградные плоскости}
+\subsection{Conditions for Retrograde Planes}
 
-Ретроградными называются соседние плоскости, в которых КА
-движутся в противоположных направлениях. В
-Walker-построении такими плоскостями являются первая и последняя.
+Adjacent planes in which spacecraft move in opposite directions are called retrograde. In a Walker
+constellation, these are the first and last planes.
 
-При заданном числе плоскостей \(P\) долгота восходящего узла последней
-плоскости определяется как
+For a given number of planes \(P\), the longitude of the ascending node of the last plane is
+determined as:
 \begin{equation}
     \Omega_P = (P-1)\Delta\Omega_{\text{max}},
 \end{equation}
-где \(\Delta\Omega_{\text{max}}\) — максимальное значение шага по долготе
-восходящего узла, полученное для коорбитальных плоскостей (\ref{eq:delta_omega_max}).
+where \(\Delta\Omega_{\text{max}}\) is the maximum RAAN step obtained for the co-orbital planes
+(\ref{eq:delta_omega_max}).
 
-Если \(\Delta\Omega_{\text{max}} < \pi\), то требуется проверить, не
-будет ли разрыва в покрытии на ретроградных орбитах.
+If \(\Delta\Omega_{\text{max}} < \pi\), it is necessary to verify whether a coverage gap exists on
+the retrograde orbits.
 
-Для ретроградных плоскостей максимальное допустимое угловое расстояние
-между ними определяется как сумма двух полос покрытия:
+For retrograde planes, the maximum allowable angular distance between them is defined as the sum of
+two coverage strips:
 \begin{equation}
     D_{re} = 2\lambda_{\text{street}}.
 \end{equation}
 
-Угловое расстояние между первой и последней плоскостью можно вычислить
-следующим образом:
+The angular distance between the first and last planes can be computed as follows:
 \begin{equation}
     \cos i_{rel} = \cos^2 i + \cos\bigl((P-1)\Delta\Omega_{\text{max}}\bigr)\sin^2 i.
 \end{equation}
-Это расстояние \(i_{rel}\) соответствует углу между плоскостями, если оно
-рассматривается между их восходящими узлами.
+This distance \(i_{rel}\) corresponds to the angle between the planes when measured between their
+ascending nodes.
 
-Для оценки разрыва покрытия между ретроградными плоскостями требуется
-получить угол, измеряемый именно между ретроградными плоскостями. Он равен:
+To assess the coverage gap between retrograde planes, we must determine the angle measured
+specifically between these retrograde planes. It is given by:
 \begin{equation}
     i_{rel}^{(re)} = \pi - i_{rel}.
 \end{equation}
-Если выполняется условие \(i_{rel}^{(re)} \leq D_{re}\),
-то покрытие на ретроградных плоскостях остается непрерывным. В противном
-случае возникает разрыв.
+If the condition \(i_{rel}^{(re)} \leq D_{re}\) holds, the coverage on the retrograde planes remains
+continuous. Otherwise, a coverage gap occurs.
 
-В отличие от коорбитального случая, фазовый сдвиг \(f\) не оказывает
-влияния на покрытие на ретроградных орбитах. Они движутся навстречу друг
-другу, и их геометрическое взаимное расположение жестко фиксировано в
-любой момент времени.
+Unlike the co-orbital case, the phase shift \(f\) has no effect on the coverage on retrograde
+orbits. The planes move toward each other, and their mutual geometric position remains fixed at any
+given moment.
 
-Приравнивая угловое расстояние между первой и последней плоскостями
-\(i_{rel}^{(re)}\) к \(D_{re}\), получаем выражение для минимально
-допустимой разницы ДВУ, при которой не возникает разрыва в покрытии:
+Equating the angular distance between the first and last planes \(i_{rel}^{(re)}\) to \(D_{re}\), we
+obtain the expression for the minimum allowable RAAN difference at which no coverage gap occurs:
 \begin{equation}
     \Delta\Omega_{\text{min}} = \frac{1}{(P-1)} \arccos\left(
         \frac{-\cos D_{re} - \cos^2 i}{\sin^2 i}\right).
 \end{equation}
 
-Таким образом, для ретроградных плоскостей разница ДВУ выбирается исходя
-из условия \(\Delta\Omega \geq \Delta\Omega_{\text{min}}\). При этом
-геометрическое положение таких плоскостей остается фиксированным во время
-движения спутников, и фазовый сдвиг не влияет на непрерывность покрытия.
+Thus, for retrograde planes, the RAAN difference is chosen based on the condition \(\Delta\Omega
+\geq \Delta\Omega_{\text{min}}\). In this case, the geometric position of such planes remains fixed
+during satellite motion, and the phase shift does not influence the continuity of coverage.
