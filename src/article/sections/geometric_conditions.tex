@@ -148,3 +148,31 @@ obtain the expression for the minimum allowable RAAN difference at which no cove
 Thus, for retrograde planes, the RAAN difference is chosen based on the condition \(\Delta\Omega
 \geq \Delta\Omega_{\text{min}}\). In this case, the geometric position of such planes remains fixed
 during satellite motion, and the phase shift does not influence the continuity of coverage.
+
+\subsection{Polar Conditions}
+
+Earth pole coverage requires specific analysis. For orbits with inclinations less than $90^\circ$, 
+the projections of satellite trajectories onto the Earth's surface do not pass through the poles. 
+Instead, the ground tracks reach their maximum latitude corresponding to the orbital inclination. 
+Even if the Walker constellation parameters are chosen such that no coverage gaps occur between adjacent 
+orbital planes, a ''claw'' shaped region around the pole may remain uncovered (Fig.~~\ref{fig:polar_claw}).
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{pictures/polar_claw.png}
+    \caption{Uncovered polar polygon: red circle - points with latitude corresponding to the orbital inclination}
+    \label{fig:polar_claw}
+\end{figure}
+If all groundtrack projections near the pole are expanded by the street-of-coverage half-width 
+$\lambda_{\mathrm{street}}$, the remaining region forms the polygon of interest. 
+To ensure that this region remains covered, the following condition must be satisfied:
+
+\begin{equation}
+    \lambda_{\mathrm{street}} \geq \left|\frac{\pi}{2}-i\right|.
+\end{equation}
+
+Under this condition, the streets-of-coverage of all orbital planes pass through the pole in 
+the worst-case configuration and cover the otherwise uncovered region. This constraint is imposed on 
+the streets of coverage to account for retrograde orbits.
+The traditional condition \(\lambda_{\mathrm{street}} > 0\) \cite{wertz2001ocdm} is achieved only in the limited case of \(i=\frac{\pi}{2}\).
+    
+    
