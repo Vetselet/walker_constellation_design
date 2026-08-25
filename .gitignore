@@ -4,3 +4,12 @@ src/article/walker_constellation_design.blg
 
 src/article/walker_constellation_design.pdf
 
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xdv
