@@ -1,138 +1,57 @@
-\section{Введение}
+\section{Introduction}
 \label{sec:introduction}
 
-\subsection{Формирование орбитальной группировки как задача системного проектирования}
+\subsection{Space segment orbital configuration design from a systems engineering perspective}
 
-Проектирование орбитального построения многоспутниковой системы целесообразно
-рассматривать как часть системного проектирования многосоставной космической
-миссии. Существующие методы системного проектирования космических миссий предлагают
-подход, где исходными данными служат цели миссии и внешние условия, которые
-последовательно преобразуются в проверяемые требования к системе и её
-компонентам \cite{wertz2001ocdm}. Структура орбитального построения при таком
-подходе представляет собой одно из архитектурных решений наряду с
-характеристиками космических аппаратов (КА) и полезной нагрузки, наземного
-сегмента, радиолиний, схемы развёртывания и программы эксплуатации.
-Обобщённая методика анализа распределённых спутниковых систем предлагает
-сопоставлять архитектурные решения по совокупности показателей возможностей,
-производительности, стоимости, доступности и адаптируемости
-\cite{shaw1998distributed}. Поэтому одна и та же общая цель создания системы
-телекомуникационных спутников, обеспечивающих доступ к широкополосным сетям,
-может приводить к различным математическим постановкам в зависимости от того,
-какие показатели качества обслуживания (Quality of Service, QoS) принимаются как
-требования, ограничения или целевые функции. 
+The space segment design for a large broadband communication constellation is a multi-objective tradespace exploration problem that maps stakeholder requirements and high-level mission objectives onto an architectural solution \cite{crawley2016system}. Selecting an orbital configuration requires reconciling a variety of multidisciplinary design factors across several technical domains. The orbital configuration choice is simultaneously driven by coverage and traffic metrics, telecommunication link budgets, regulatory requirements, deployment and replenishment strategies. Furthermore, environmental constraints, orbital debris mitigation rules, satellite stationkeeping, cross-link networking topology, and ground segment interfaces limit the viable design space \cite{wertz2001ocdm, aerospace13030284}. Space segment orbital configuration can thus be considered as one of the architectural domains, whose parameters are tightly coupled with other design variables. Hence, a single architectural decision affects the performance of multiple subsystems. Consequently, evaluating alternative architectures requires a structured decision-making framework \cite{nasasp20166105}. Such a framework must assess alternative architectures against an overall performance vector comprising system capabilities, lifecycle costs, predicted user experience, and adaptability \cite{shaw1998distributed}. This implies the development of specialized evaluation tools capable of conducting high-fidelity analysis within each domain to integrate the conflicting requirements into a unified optimization process. As shown by \cite{deWeck2003}, a single set of high-level mission requirements for a space-based broadband communication system can result in various mathematical problem formulations for determining the space segment orbital configuration, depending on how specific quality of service indicators are allocated as system requirements, constraints, or objective functions. This means that the breakdown structure of the framework is strictly dependent on the selected optimization approach and the specific problem formulation. To address this, we propose a methodology that decouples geometry-related factors from the broader multidisciplinary tradespace, consolidating them into a standalone optimization instrument designed to serve as a component of the constellation design framework.
 
-\subsection{Требования и ограничения проектируемой системы}
 
-Характер требований к системе может сильно отличаться. Одним из базовых
-требований к спутниковой группировке является покрытие
-\cite{williamsrogers2025}. В зависимости от назначения системы оно может быть
-глобальным или региональным, непрерывным или периодическим
-\cite{huang2021, williamsrogers2025}, а сам показатель может характеризовать долю
-обслуживаемой территории, время повторного посещения либо непрерывную
-доступность хотя бы одного КА \cite{williamsrogers2025, wertz2001ocdm}.
+\subsection{Design Constraints and Requirements}
 
-Однако геометрическая видимость спутника ещё не означает предоставления
-широкополосного доступа (ШПД). Телекомуникационная теория для обеспечения
-покрытия в точке поверхности Земли требует преодоления заданного порога качества
-канала, например по SNR \cite{lansard1998tradeoffs,palmade1998skybridge}.
+Although system requirements can vary significantly across different missions, one of the most common requirements for a telecommunication constellation is its coverage \cite{williamsrogers2025}. Depending on the mission objectives, it can be global or regional, continuous or periodic \cite{huang2021, williamsrogers2025}, while the coverage metric can be chosen to express the fraction of the covered area of interest, the revisit time, or the continuous availability of at least one spacecraft for a chosen point of interest\cite{williamsrogers2025, wertz2001ocdm}.
 
-Для многих космических систем ШПД отдельный класс ограничений связан с защитой
-геостационарных спутниковых сетей. Статья~22 Регламента радиосвязи и рекомендация
-ITU-R~S.1503-4 предусматривают проверку ограничений эквивалентной плотности потока
-мощности для негеостационарных систем фиксированной спутниковой службы
-\cite{ituRR2024,ituS1503_4}. Эти требования обычно реализуются средствами управления
-излучением, однако могут влиять и на архитектуру группировки. Показателен проект
-SkyBridge, где требование частотного сосуществования с геостационарными системами
-совместно с непрерывным покрытием привело к попарной организации плоскостей и
-специальному фазированию КА построения \cite{palmade1998skybridge}.
+However, the line-of-sight geometric availability of a satellite does not guarantee the availability of broadband service. Telecommunication requirements associate network availability and target throughput with the necessity to exceed certain channel quality thresholds, such as the signal-to-noise ratio \cite{lansard1998tradeoffs,palmade1998skybridge}. In constellation geometry optimization, these radio performance metrics are typically expressed via a minimum elevation angle constraint. For instance, the Teledesic project utilized a polar configuration of 924 satellites at a 700 km altitude to guarantee an elevation angle threshold $\varepsilon_{min} \ge 40^\circ$ \cite{sturza1997teledesic}. This constraint was required for Ka-band operations, where millimeter-wave signals suffer severe atmospheric attenuation and rain fading under low elevation angles. Propagation latency is another performance metric that relates orbital geometry to network performance. Increasing the orbital altitude to expand elevation angles also increases signal latency, a trade-off studied in constellation design analysis \cite{delportillo2019}.
 
-Другой важной группой требований является безопасность орбитального движения.
-Рост количества действующих аппаратов и объектов космического мусора повышает
-нагрузку на процедуры предупреждения опасных сближений и выполнения манёвров
-\cite{esa2025environment}. Работы по непересекающимся относительным траекториям
-и орбитальной заселенности показывают, что предотвращение опасных сближений может
-быть учтено непосредственно в структуру построения \cite{arnas2023capacity}.
-Таким образом, выбор орбитального построения представляет собой многокритериальный
-системный компромисс \cite{lansard1998tradeoffs}. В представленной работе
-реализуется подход, обобщающий описанные ранее требования.
 
-\subsection{Выбор типа орбитальной группировки}
+For broadband satellite systems, there are specific constraints to protect geostationary satellite networks. Article 22 of the Radio Regulations and Recommendation ITU-R S.1503-4 define the evaluation criteria for equivalent power flux-density (EPFD) limits concerning non-geostationary satellite communication systems \cite{ituRR2024, ituS1503_4}. Although these requirements are primarily managed via power control and beam mitigation techniques, they can also influence the orbital configuration design. For example, in the SkyBridge project, the requirement for frequency coexistence with geostationary systems, combined with continuous coverage, necessitated a double-plane orbital configuration with specific spacecraft phasing \cite{palmade1998skybridge}.
 
-Выбор оптимальной орбитальной конфигурации зависит от целевого назначения миссии.
-В задачах глобальной навигации \cite{guan2020,qin2025}, дистанционного зондирования
-Земли \cite{wang2025dnsde} и прерывистого мониторинга применялись различные
-подходы к распределению спутников. Для задач межспутниковой связи одним из
-стандартных решений является применение кинематически правильных систем
-\cite{mozhaev1989}, получивших широкое распространение в виде Walker-построений
-\cite{walker1971} благодаря компактному параметрическому описанию, регулярному
-распределению аппаратов и удобству предварительного анализа.
+Orbital configuration design for telecommunication space systems must take into account the non-uniform latitudinal distribution of global traffic demand and concentrate satellite capacity over areas of interest. Consequently, telecommunication missions require multi-fold coverage over high-traffic areas to enable frequency reuse, satellite handover, and peak capacity enhancement. As demonstrated by the Globalstar \cite{wiedeman1993globalstar} and Starlink Gen2 \cite{ali2026starlink} systems, this requirement leads to the choice of inclined Walker delta configurations. Conversely, systems like Iridium \cite{fossa1998overview} utilize a polar Walker star geometry to achieve continuous coverage over high-latitude and polar regions. Designing a geometry that balances these coverage  and regional capacity demands with interference mitigation limits remains a central trade-off in mega-constellation optimization.
 
-Как показывают \cite{huang2021}, при многокритериальном проектировании
-непрерывного глобального покрытия симметричные структуры Walker демонстрируют
-существенное преимущество над другими паттернами за счёт равномерного
-распределения интервалов повторного посещения. Развитием этой концепции становятся
-многослойные структуры Walker, позволяющие более гибко балансировать между
-зональным и глобальным покрытием \cite{wang2026poaqpso,wang2025dnsde}.
+Environmental factors comprise another set of constraints to consider in orbital configuration design. Atmospheric drag and radiation belts affect the range of the operational altitude for Low Earth Orbit constellations. Acceleration due to drag increase stationkeeping propellant consumption, but facilitates post-mission disposal. On the one hand, the 540 km altitude was chosen for Starlink Gen1 \cite{ali2026starlink}, enabling atmospheric deorbiting of failed spacecraft within a five-year window. On the  other hand, Iridium \cite{fossa1998overview} utilizes higher altitudes between 780 km and 800 km to reduce atmospheric drag and the corresponding orbit maintenance propellant mass. The inner Van Allen radiation belt imposes an upper altitude bound  at approximately 1300–1400 km. Exceeding this threshold increases radiation exposure, requiring additional shielding mass for onboard electronics \cite{wertz2001ocdm}. Hence, the choice of altitudes for the Guowang (1145 km) \cite{???} and Globalstar (1414 km) \cite{wiedeman1993globalstar}.
 
-В настоящей работе используется структура, близкая к Walker, но допускающая иной
-способ задания фазового параметра и распределения орбитальных плоскостей.
+Another important category of requirements is space traffic safety. The growing population of space objects increases the operational load associated with conjunction assessment and collision avoidance maneuvering \cite{esa2025environment}. Recent studies on orbital space occupancy show that collision avoidance constraints can also be integrated into the constellation geometry \cite{arnas2023capacity, zhang2026}. Specifically, the Minimum Space Occupancy (MiSO) orbit framework minimizes the overall spatial volume consumed by the system under orbital perturbations \cite{reiland2021}, thereby mitigating both intra-system and cross-operator conjunction risks. The spatial occupancy idea helps to obtain the slotting structures that divide altitude capacity into discretized cells. Geometric constraints on the secular evolution of these cells can serve as a passive traffic management mechanism \cite{arnas2021definition}. Additionally, the slotting configuration ensures compliance with mission performance criteria as maintaining each satellite within its designated slot guarantees that the coverage metrics are met.  Thus, the slotting structure also determines the stationkeeping propellant budget, as choosing robust orbital configurations minimizes the active maneuver execution frequency required to maintain slot tolerances \cite{maisonobe2023, wertz1998}.
 
-\subsection{Выбор метода оптимизации}
+Finally, orbital configuration parameters are constrained by network topology requirements and the geometric feasibility of inter-satellite links (ISL) and space-to-ground links. In systems lacking ISL, such as Globalstar \cite{wiedeman1993globalstar}, a higher altitude (1414 km) was required to expand the satellite footprint, ensuring simultaneous visibility to the user and the ground gateway. On the other hand, laser ISL in the Starlink constellation \cite{ali2026starlink} decoupled coverage from immediate gateway proximity, permitting an altitude reduction to 540 km. Additionally, the constellation geometry determines the dynamic routing stability of the network. In polar Walker star configurations, adjacent spacecraft cross near polar regions with high relative velocities. The resulting line-of-sight angular rates can exceed the tracking and re-pointing capabilities of optical communication terminals, disrupting link connectivity. Maintaining a stable topology requires the optimization framework to select specific inter-plane phasing that minimizes relative angular velocities between adjacent spacecraft.
 
-Для решения задач конфигурирования спутниковых группировок в литературе применяется
-широкий спектр математических и вычислительных методов, каждый из которых имеет
-свои области применения.
+\subsection{Orbital configuration pattern}
+
+The choice of orbital configuration pattern also depends on the mission objectives.
+Various space segment design approaches are applied to the problems of global navigation \cite{guan2020,qin2025}, remote sensing \cite{wang2025dnsde}, and intermittent Earth observation. Broadband LEO constellation design, however, is often based on the kinematically regular pattern \cite{mozhaev1989} also known as Walker configurations \cite{walker1971}. This orbital geometry has become widely adopted owing to its convenient parameterization, regular spacecraft distribution, and the ease of preliminary analysis. Another factor is the use of circular orbits, which are important for telecommunication satellites due to predictable payload consumption profiles at a nearly constant altitude.
+
+As shown by \cite{huang2021}, symmetrical Walker configurations demonstrate a significant advantage over alternative patterns in multi-objective continuous global coverage design due to the uniform distribution of revisit intervals. Multi-layered Walker structures extend this concept, providing greater flexibility to balance between zonal and global coverage requirements \cite{wang2026poaqpso,wang2025dnsde}.
+
+This work employs a modified Walker configuration pattern, which is detailed in the following sections.
+
+\subsection{Optimization methods}
+
+Various mathematical and computational methods have been employed to address orbital configuration design. Just as each problem formulation is design-specific, the proposed optimization methods are problem-specific.
+
 \begin{itemize}
-    \item \textbf{Аналитические методы и методы streets-of-coverage.} Задача решается
-    через геометрический анализ зон покрытия. До массового внедрения численных
-    методов проектирование констелляций опиралось на строгую аналитику.
-    Классическим примером служит метод streets of coverage. В его развитие
-    Улыбышев \cite{ulybyshev2014} предложил геометрический подход на основе
-    двумерных карт видимости, введя концепцию coverage belt. Это позволило
-    аналитически оценивать revisit time для структур Walker. Однако классический
-    паттерн Walker имеет существенный недостаток: неучёт вращения Земли в фазировке
-    приводит к дрейфу наземных трасс и потере согласованности покрытия. Эту
-    проблему удалось преодолеть Ли (Lee, 2023), разработавшему замкнутое
-    аналитическое решение RGT-Walker.
+    \item \textbf{Analytical and Streets-of-Coverage Methods:} These approaches rely on geometric analysis of satellite footprints. Prior to the widespread adoption of numerical techniques, constellation design depended on analytical formulations, exemplified by the Streets-of-Coverage method \cite{luders1961}. The method was further developed \cite{ulybyshev2014} by using two-dimensional visibility maps with a \textit{coverage belt} to analytically evaluate revisit times for Walker structures. However, a limitation of the classical Walker pattern is its disregard of the ground track drift, which results in the degradation of coverage consistency. To overcome this limitation, Lee \cite{lee2023} formulated a closed-form analytical solution for Repeat Ground Track (RGT) Walker constellations.
 
-    \item \textbf{Методы целочисленного линейного программирования (MILP).}
-    Несмотря на вычислительную сложность для больших задач, MILP обеспечивает
-    строгие гарантии оптимальности для дискретных задач конфигурации.
-    Актуальные работы, такие как Rogers et al. (2026), позволяют находить строго
-    оптимальные конфигурации спутников Walker для различных критериев покрытия
-    и связности, хотя и ценой значительных вычислительных затрат при масштабировании.
+    \item \textbf{Mixed-Integer Linear Programming (MILP):} Despite high computational complexity, MILP provides optimality guarantees for discrete configuration problems. Recent studies \cite{williamsRogersEtAl_JSR_2025} show that MILP can converge to     optimal Walker configuration parameters under various coverage and connectivity metrics, although at the expense of substantial computational resources.
 
-    \item \textbf{Дифференциальная эволюция.} Новые подходы, использующие
-    градиентные методы и релаксацию целевых функций, позволяют ускорить сходимость
-    в пространствах высокой размерности. Подход Kacker \& Cahoy (2026)
-    иллюстрирует, как релаксация задач покрытия и revisit time может быть
-    интегрирована в дифференцируемую оптимизацию, открывая возможности для быстрой
-    итерации проектных решений.
+    \item \textbf{Gradient-Based Methods and Objective Relaxation:} The use of analytical gradients and continuous objective relaxation is shown to accelerate optimization convergence in high-dimensional parameter spaces. The approach proposed by Kacker and Cahoy \cite{kacker2026} demonstrates how the relaxation of discontinuous coverage and revisit time indicators into continuous functions can be used in the optimization pipeline.
 
-    \item \textbf{Методы машинного обучения.} Для снижения вычислительной нагрузки
-    при оценке сложных орбитальных характеристик применяются суррогатные модели,
-    например на базе радиальных базисных функций, а также методы обучения с
-    подкреплением, демонстрирующие потенциал в адаптивном управлении конфигурацией
-    в условиях неопределённости \cite{shang2025}.
+    %\item \textbf{Методы машинного обучения.} Для снижения вычислительной нагрузки
+    %при оценке сложных орбитальных характеристик применяются суррогатные модели,
+    %например на базе радиальных базисных функций, а также методы обучения с
+    %подкреплением, демонстрирующие потенциал в адаптивном управлении конфигурацией
+    %в условиях неопределённости \cite{shang2025}.
 
-    \item \textbf{Эволюционные алгоритмы.} Генетические алгоритмы (GA) доказали свою
-    эффективность в покрытии больших нерегулярных областей \cite{gu2025} и
-    оптимизации навигационных потенциалов, выступая в качестве надёжного инструмента
-    глобального поиска \cite{whittecar2014}. Исследования, такие как Xunchang Gu et al.
-    (2025) и Shuai Wang et al. (2025), показывают применение генетических алгоритмов
-    и дифференциальной эволюции для эффективного поиска конфигураций
-    мега-констелляций и многоуровневых группировок. При этом стандартные GA
-    сталкиваются с вычислительными трудностями при росте числа переменных, что
-    стимулирует разработку гибридных схем.
+    \item \textbf{Metaheuristic and Evolutionary Algorithms:} Genetic Algorithms (GAs) and Differential Evolution (DE) have proven effective for global optimization over large, irregular target regions \cite{gu2025} and for enhancing navigation potential \cite{whittecar2014}. Recent studies \cite{gu2025,wang2025dnsde} utilize GAs and differential evolution to explore the tradespace of multi-layered mega-constellations. However, standard evolutionary algorithms encounter significant computational challenges as the number of design variables increases .
 \end{itemize}
 
-Ни один из этих подходов не является универсальным. Выбор метода определяется
-структурой конкретной задачи. В настоящей работе математическая постановка задачи
-предиктована системными требованиями к низкоорбитальной многоспутниковой
-группировке ШПД. В качестве базовой цели рассматривается сокращение числа
-космических аппаратов и орбитальных плоскостей при выполнении требований к
-покрытию, качеству радиолинии, защите геостационарных систем и безопасности
-орбитального движения. Одни характеристики могут выступать как целевые функции,
-а другие — как жёсткие ограничения. Выбор оптимизационного метода, наиболее
-соответствующего полученной структуре задачи, будет производиться после фиксации
-состава переменных, критериев и ограничений.
+All in all, the review of optimization approaches to the orbital configuration problem shows that there is no universal methodology. The selection of a specific optimization method is always based on the problem formulation, which in turn follows from the mission high-level requirements decomposition and their mapping onto the decision space in the form of constraints and objective functions. This work delineates the process of decoupling geometry-related factors from the broader multidisciplinary tradespace and formulating a geometry-based problem, whose solution can be addressed by optimization techniques of our choice. Finally, we discuss how this optimized solution, and the instrument developed to obtain it, can be integrated into the broader decision-making framework.
+
+The paper has the following structure...
