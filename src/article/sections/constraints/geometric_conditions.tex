@@ -1,34 +1,71 @@
 \subsection{Sufficient Geometric Conditions for Continuous Global Coverage}
 \label{subsec:geometric_conditions}
 
-To achieve global coverage, three groups of geometric conditions must be satisfied, accounting for
-the mutual arrangement of the orbital planes. These include co-orbital, retrograde, and polar
-conditions. It is important to note that these conditions are sufficient for the spherical Earth
-model. Since the Earth's ellipsoid is inscribed within this sphere,
-satisfying these inequalities guarantees full coverage for the actual ellipsoidal model as well.
+The problem of ensuring continuous global coverage by a Walker constellation can be 
+decomposed into three geometric conditions, illustrated in Figure~\ref{fig:geometric_conditions_overview}. 
+These conditions address the co-orbital, retrograde, and polar relative motion of satellites. 
+Their joint satisfaction guarantees the absence of coverage gaps in all latitudinal zones.
+
+Co-orbital planes (Fig.~\ref{fig:coorbital_condition}a) are adjacent planes where spacecraft
+move in the same direction. In the Walker constellation, the phase shift between spacecraft in
+adjacent planes is fixed, and spacecraft within a plane are separated by equal intervals in
+argument of latitude. To ensure continuous overlap between these planes, the maximum allowable
+angular distance between them must not exceed \(D\) (\ref{eq:D}):
+\begin{equation}\label{eq:D}
+    D = \lambda_{\text{street}} + \theta,
+\end{equation}
+
+Retrograde planes (Fig.~\ref{fig:retrograde_condition}b) are adjacent planes where spacecraft
+move in opposite directions, such as the first and last planes of a Walker constellation.
+To ensure continuous overlap between these planes, the streets of coverage must touch, meaning
+the maximum allowable angular distance between them must not exceed \(D_{re}\) (\ref{eq:D_re}):
+\begin{equation}\label{eq:D_re}
+    D_{re} = 2\lambda_{\text{street}}.
+\end{equation}
+
+The polar case (Fig.~\ref{fig:polar_condition}c) addresses the uncovered "claw"-shaped region
+near the poles, which arises because orbits with inclination \(i < 90^\circ\) do not pass directly
+over the poles. To close this region, the streets of coverage must extend all the way to the axis
+of rotation.
+
+It is important to note that these conditions are sufficient for the spherical Earth model.
+Since the actual Earth's ellipsoid is inscribed within this sphere, satisfying these
+inequalities guarantees full coverage for the real ellipsoidal model as well.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{pictures/coorbital_condition.jpg}
+        \caption{Co-orbital planes: adjacent planes move in the same direction; the street of coverage and satellite's field of view are shown.}
+        \label{fig:coorbital_condition}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{pictures/retrograde_condition.jpg}
+        \caption{Retrograde planes: adjacent planes move in opposite directions; the streets of coverage must be touched.}
+        \label{fig:retrograde_condition}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{pictures/polar_condition.png}
+        \caption{Polar case: illustration of the uncovered region around the pole named "claw" and the 
+        requirement for the streets of coverage to reach the rotation axis.}
+        \label{fig:polar_condition}
+    \end{subfigure}
+    \caption{Geometric conditions for coverage: (a) co-orbital, (b) retrograde, (c) polar.}
+    \label{fig:geometric_conditions_overview}
+\end{figure}
 
 \paragraph{Conditions for Co-Orbital Planes}
 
-Let adjacent orbital planes be called co-orbital if the spacecraft in them move in the same
-direction. To prevent coverage gaps between these planes, the distance between them must not exceed
-the maximum allowable value \(D\). Geometrically, this distance is defined as the sum of half the
-coverage strip of one plane and the field-of-view radius of the adjacent one:
-\begin{equation}
-    D = \lambda_{\text{street}} + \theta.
-\end{equation}
-
-Based on the normal vectors to the orbital planes, the angular distance between two co-orbital
-planes \(i_{rel}\) is expressed through the inclination and the RAAN difference as:
-\begin{equation}
-    \cos i_{rel} = \cos^2 i + \cos(\Delta\Omega) \sin^2 i.
-\end{equation}
-Equating this distance to the maximum allowable value (\(i_{rel} = D\)), we obtain the restriction
+Equating angular distance between two co-orbital
+planes $$i_{rel}$$ (\ref{eq:i_rel}) to the maximum allowable value $$D$$ (\ref{eq:D}), we obtain the constraint
 on the maximum RAAN difference for co-orbital planes:
 \begin{equation}\label{eq:delta_omega_max}
     \Delta\Omega_{\text{max}} = \arccos\left(\frac{\cos D - \cos^2 i}{\sin^2 i}\right).
 \end{equation}
 Choosing \(\Delta\Omega \leq \Delta\Omega_{\text{max}}\) ensures that no gaps in coorbital planes.
-
 
 \begin{figure}[ht]
     \centering
@@ -99,9 +136,6 @@ co-orbital planes.
 
 \paragraph{Conditions for Retrograde Planes}
 
-Adjacent planes in which spacecraft move in opposite directions are called retrograde. In a Walker
-constellation, these are the first and last planes.
-
 For a given number of planes \(P\), the longitude of the ascending node of the last plane is
 determined as:
 \begin{equation}
@@ -112,20 +146,6 @@ where \(\Delta\Omega_{\text{max}}\) is the maximum RAAN step obtained for the co
 
 If \(\Delta\Omega_{\text{max}} < \pi\), it is necessary to verify whether a coverage gap exists on
 the retrograde orbits.
-
-For retrograde planes, the maximum allowable angular distance between them is defined as the sum of
-two coverage strips:
-\begin{equation}
-    D_{re} = 2\lambda_{\text{street}}.
-\end{equation}
-
-The angular distance between the first and last planes can be computed as follows:
-\begin{equation}
-    \cos i_{rel} = \cos^2 i + \cos\bigl((P-1)\Delta\Omega_{\text{max}}\bigr)\sin^2 i.
-\end{equation}
-This distance \(i_{rel}\) corresponds to the angle between the planes when measured between their
-ascending nodes.
-
 To assess the coverage gap between retrograde planes, we must determine the angle measured
 specifically between these retrograde planes. It is given by:
 \begin{equation}
@@ -151,7 +171,7 @@ during satellite motion, and the phase shift does not influence the continuity o
 
 \paragraph{Polar Conditions}
 
-Earth pole coverage requires specific analysis. For orbits with inclinations less than $90^\circ$, 
+For orbits with inclinations less than $90^\circ$, 
 the projections of satellite trajectories onto the Earth's surface do not pass through the poles. 
 Instead, the ground tracks reach their maximum latitude corresponding to the orbital inclination. 
 Even if the Walker constellation parameters are chosen such that no coverage gaps occur between adjacent 
@@ -170,9 +190,10 @@ To ensure that this region remains covered, the following condition must be sati
     \lambda_{\mathrm{street}} \geq \left|\frac{\pi}{2}-i\right|.
 \end{equation}
 
-Under this condition, the streets-of-coverage of all orbital planes pass through the pole in 
-the worst-case configuration and cover the otherwise uncovered region. This constraint is imposed on 
-the streets of coverage to account for retrograde orbits.
-The traditional condition \(\lambda_{\mathrm{street}} > 0\) \cite{wertz2001ocdm} is achieved only in the limited case of \(i=\frac{\pi}{2}\).
+Under this condition, the streets-of-coverage of all orbital planes pass through the
+pole in the worst-case configuration and cover the otherwise uncovered region. This
+constraint is imposed on the streets of coverage to account for retrograde orbits.
+The traditional condition \(\lambda_{\mathrm{street}} > 0\) \cite{wertz2001ocdm} is
+achieved only in the limited case of \(i=\frac{\pi}{2}\).
     
     
