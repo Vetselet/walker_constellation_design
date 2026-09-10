@@ -62,7 +62,7 @@ inequalities guarantees full coverage for the real ellipsoidal model as well.
 \paragraph{Conditions for Co-Orbital Planes}
 
 Equating angular distance between two co-orbital
-planes $$i_{rel}$$ (\ref{eq:i_rel}) to the maximum allowable value $$D$$ (\ref{eq:D}), we obtain the constraint
+planes $$i_{\mathrm{rel}}$$ (\ref{eq:i_rel}) to the maximum allowable value $$D$$ (\ref{eq:D}), we obtain the constraint
 on the maximum RAAN difference for co-orbital planes:
 \begin{equation}\label{eq:delta_omega_max}
     \Delta\Omega_{\text{max}} = \arccos\left(\frac{\cos D - \cos^2 i}{\sin^2 i}\right).
@@ -81,13 +81,13 @@ shift determines the relative offset of the ground tracks along the intersection
 planes and, consequently, how the coverage strips overlap. Figure~\ref{fig:phase_shift} illustrates
 the mutual geometry of the orbits with a phase shift. We consider two adjacent co-orbital planes
 with a RAAN difference of $\Delta\Omega$. We assume that the chosen $\Delta\Omega$ lies within the
-allowable RAAN range. The angular distance between these planes is denoted as $i_{rel}$.
+allowable RAAN range. The angular distance between these planes is denoted as $i_{\mathrm{rel}}$.
 
 Since the coverage strip of a single orbit has a width of $\lambda_{\text{street}}$, the angular
 distance from the outer edge of one orbit's coverage strip to the adjacent orbit along the arc
-$i_{rel}$ is:
+$i_{\mathrm{rel}}$ is:
 \begin{equation}
-    d = i_{rel} - \lambda_{\text{street}}.
+    d = i_{\mathrm{rel}} - \lambda_{\text{street}}.
 \end{equation}
 
 To avoid a coverage gap, the spacecraft on the adjacent orbit must be positioned sufficiently close
@@ -104,32 +104,32 @@ We measure the phase shift from the first spacecraft on the left orbit upwards a
 of motion. If \(u_3\) falls within the range \([u_{3,\min}, u_{3,\max}]\), no coverage gaps will
 occur between the adjacent planes. The allowable phase shifts are then expressed as:
 \begin{equation}\label{eq:phase_shift}
-    f_{max} = \frac{\Delta u}{2} + \beta - 2\alpha
+    f_{max} = \frac{\Delta u}{2} + \beta - 2\eta
 \end{equation}
 \begin{equation}
-    f_{min} = \frac{\Delta u}{2} - \beta - 2\alpha
+    f_{min} = \frac{\Delta u}{2} - \beta - 2\eta
 \end{equation}
 
 From spherical geometry, we can express the allowable deviation in argument of latitude $\beta$ and
-the offset $\alpha$:
+the offset $\eta$:
 \begin{equation}
     \beta = \arccos \left(  \frac{\cos \theta}{\cos d} \right)
 \end{equation}
 \begin{equation}
-    \alpha = \arccos \left( \frac{\cos(\frac{\Delta\Omega}{2})}{\cos(\frac{i_{rel}}{2})} \right)
+    \eta = \arccos \left( \frac{\cos(\frac{\Delta\Omega}{2})}{\cos(\frac{i_{\mathrm{rel}}}{2})} \right)
 \end{equation}
 
-By substituting the expressions for \(\alpha\) and \(\beta\) into \eqref{eq:phase_shift}, we obtain
+By substituting the expressions for \(\eta\) and \(\beta\) into \eqref{eq:phase_shift}, we obtain
 the final analytical formulas for calculating the phase shift boundaries:
 \begin{equation}
     f_{max} = \frac{\Delta u}{2} + \arccos \left( \frac{\cos \theta}{\cos d} \right)
     - 2 \arccos \left( \frac{\cos\left(\frac{\Delta\Omega}{2}\right)}{\cos\left(
-        \frac{i_{rel}}{2}\right)} \right)
+        \frac{i_{\mathrm{rel}}}{2}\right)} \right)
 \end{equation}
 \begin{equation}
     f_{min} = \frac{\Delta u}{2} - \arccos \left( \frac{\cos \theta}{\cos d} \right)
     - 2 \arccos \left( \frac{\cos\left(\frac{\Delta\Omega}{2}\right)}{\cos\left(
-        \frac{i_{rel}}{2}\right)} \right)
+        \frac{i_{\mathrm{rel}}}{2}\right)} \right)
 \end{equation}
 
 Selecting a phase shift \(f \in [f_{\min}, f_{\max}]\) guarantees continuous coverage between
@@ -151,16 +151,16 @@ the retrograde orbits.
 To assess the coverage gap between retrograde planes, we must determine the angle measured
 specifically between these retrograde planes. It is given by:
 \begin{equation}
-    i_{rel}^{(re)} = \pi - i_{rel}.
+    i_{\mathrm{rel}}^{(re)} = \pi - i_{\mathrm{rel}}.
 \end{equation}
-If the condition \(i_{rel}^{(re)} \leq D_{re}\) holds, the coverage on the retrograde planes remains
+If the condition \(i_{\mathrm{rel}}^{(re)} \leq D_{re}\) holds, the coverage on the retrograde planes remains
 continuous. Otherwise, a coverage gap occurs.
 
 Unlike the co-orbital case, the phase shift \(f\) has no effect on the coverage on retrograde
 orbits. The planes move toward each other, and their mutual geometric position remains fixed at any
 given moment.
 
-Equating the angular distance between the first and last planes \(i_{rel}^{(re)}\) to \(D_{re}\), we
+Equating the angular distance between the first and last planes \(i_{\mathrm{rel}}^{(re)}\) to \(D_{re}\), we
 obtain the expression for the minimum allowable RAAN difference at which no coverage gap occurs:
 \begin{equation}
     \Delta\Omega_{\text{min}} = \frac{1}{(P-1)} \arccos\left(

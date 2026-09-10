@@ -1,0 +1,39 @@
+\subsection{Пространственная и временная дискретизация}
+\label{subsec:coverage_discretization}
+
+Для численной оценки область $\mathcal{R}$ заменяется сеткой H3 заданного
+разрешения. Обозначим через
+\begin{equation}
+    \mathcal{Q}_{\rho}=\{Q_1,\ldots,Q_{N_{\rho}}\}
+    \label{eq:h3_point_set}
+\end{equation}
+множество центров H3-сот разрешения $\rho$, выбранных для рассматриваемой
+области. Тогда численная оценка показателя покрытия
+из~\eqref{eq:coverage_metric} имеет вид
+\begin{equation}
+    \widehat{\mu}_{\rho}(t,\mathbf{x})=
+    \frac{\left|\mathcal{Q}_{\rho}\cap
+        \mathcal{C}(t,\mathbf{x})\right|}{N_{\rho}}.
+    \label{eq:discrete_coverage_metric}
+\end{equation}
+Значение $\widehat{\mu}_{\rho}(t,\mathbf{x})=1$ означает, что в момент $t$
+покрыты центры всех выбранных H3-сот. Результат такой оценки зависит от
+разрешения $\rho$: его увеличение повышает пространственную детальность
+проверки, но требует больших вычислительных затрат.
+
+Для проверки покрытия во времени непрерывный интервал $\mathcal{I}$
+заменяется конечной расчётной сеткой
+\begin{equation}
+    \mathcal{T}=\{t_0,t_1,\ldots,t_M\}\subset\mathcal{I}.
+    \label{eq:time_grid}
+\end{equation}
+Начальная эпоха, границы интервала, модель движения и плотность сетки
+$\mathcal{T}$ задаются до начала численного решения. Временной шаг выбирается
+с учётом характерных угловых масштабов построения, включая расстояние между
+соседними КА и ширину полосы покрытия. В результате условие покрытия из
+задачи~\eqref{eq:optimization_problem} проверяется в дискретном виде:
+\begin{equation}
+    \min_{t\in\mathcal{T}}
+        \widehat{\mu}_{\rho}(t,\mathbf{x})=1.
+    \label{eq:discrete_time_coverage}
+\end{equation}

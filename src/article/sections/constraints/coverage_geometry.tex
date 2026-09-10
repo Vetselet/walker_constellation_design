@@ -11,6 +11,9 @@ traditional Walker description, is specified directly as an angular quantity. In
 $\alpha$ denotes the half-angle of the satellite field-of-view cone measured from the 
 subsatellite direction.
 
+The field-of-view half-angle may be specified directly by the payload characteristics
+or determined from the link budget as described in Subsection~\ref{subsec:snr}.
+
 The analytical geometric conditions for continuous coverage proposed further in this work assume 
 the Earth to be a sphere of radius $R_E$, the equatorial radius of Earth. Therefore, due to the 
 symmetry of the Walker Star configuration with respect to rotation about the Earth axis, without loss 
@@ -59,6 +62,7 @@ Thus, the field-of-view half-angle used in the further calculations can be defin
 
 \begin{equation}
 \alpha^{*} = \min\left(\alpha,\alpha_{\mathrm{eff}}\right)
+\label{eq:effective_fov}
 \end{equation}
 
 \paragraph{Street-of-coverage}
@@ -111,8 +115,8 @@ for any two orbital planes the angular distance between them is calculated as
 
 For neighboring orbital planes, this angular distance is
 
-\begin{equation}
-i_{\mathrm{rel}}=\arccos\left(\cos^2 i+\cos\Delta\Omega,\sin^2 i\right).
+\begin{equation}\label{eq:i_rel}
+i_{\mathrm{rel}}=\arccos\left(\cos^2 i+\cos\Delta\Omega\sin^2 i\right).
 \end{equation}
 
 For the angular distance between the first and the last orbital planes, the RAAN difference is $(P-1)\Delta\Omega$, and therefore
