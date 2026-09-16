@@ -8,72 +8,80 @@
 проектных переменных
 \begin{equation}
     \mathbf{x}
-    =\left(\mathbf{x}_{\mathrm{c}},\mathbf{x}_{\mathrm{d}}\right)
-    =\left(h,i,\Delta\Omega,f,S,P\right),
+    =\left(h,i,\Delta\Omega,f,S,P\right)\in\mathcal{X},
     \label{eq:design_variables}
 \end{equation}
 где
 \begin{equation}
-    \mathbf{x}_{\mathrm{c}}
-    =\left(h,i,\Delta\Omega,f\right)\in\mathcal{X}_{\mathrm{c}}
-    \subset\mathbb{R}^{4},
-    \qquad
-    \mathbf{x}_{\mathrm{d}}
-    =\left(S,P\right)\in\mathcal{X}_{\mathrm{d}}
-    \subset\mathbb{N}_{++}^{2}.
+    \mathcal{X}
+    =\mathbb{R}_{++}\times[0,\pi]\times[0,2\pi)\times[0,2\pi)
+    \times\mathbb{N}\times\mathbb{N}.
     \label{eq:design_variable_domains}
 \end{equation}
 Здесь $h$ -- высота орбиты, $i$ -- наклонение, $\Delta\Omega$ -- шаг по
 долготе восходящего узла, $f$ -- фазовый сдвиг между соседними плоскостями,
-$S$ -- число КА в плоскости, а $P$ -- число плоскостей. Множества
-$\mathcal{X}_{\mathrm{c}}$ и $\mathcal{X}_{\mathrm{d}}$ задают допустимые
-значения соответственно непрерывных и целочисленных проектных переменных.
+$S$ -- число КА в плоскости, а $P$ -- число плоскостей.
 
-Пусть $\mathcal{R}$ -- заданная область земной поверхности. Используя
-обозначения подраздела~\ref{subsec:geoprotection}, через
-$\mathcal{C}(t,\mathbf{x})\subseteq\mathcal{R}$ обозначим множество точек
-$Q$, для каждой из которых в момент $t$ существует хотя бы один КА $S_k$,
-одновременно удовлетворяющий угловому критерию поля
-зрения~\eqref{eq:angular_coverage_criterion}, векторному критерию прямой
-видимости~\eqref{eq:vector_coverage_criterion} и, если учитывается защита
-геостационарных систем, условию
-геозащиты~\eqref{eq:geoprotection_condition}. Если геозащитная маска не
-используется, последнее условие не применяется. Полуугол поля зрения
-задаётся непосредственно либо определяется из условия
-$\mathrm{SNR}\geq\mathrm{SNR}_{\min}$ согласно подразделу~\ref{subsec:snr}
-и затем ограничивается эффективным углом $\alpha^*$
+Пусть $\mathcal{R}$ -- заданная область (регион) земной поверхности ненулевой
+площади. Для пары $(Q,S_k)$ условия~\eqref{eq:angular_coverage_criterion},
+\eqref{eq:vector_coverage_criterion} и \eqref{eq:geoprotection_condition}
+проверяются в момент $t$ при параметрах группировки $\mathbf{x}$.
+Для каждой точки $Q\in\mathcal{R}$ введём индикатор покрытия:
+\begin{equation}
+    \chi(Q,t,\mathbf{x})=
+    \begin{cases}
+        1, & \exists\,k\in\{1,\ldots,SP\}: \text{ выполнены }
+            \eqref{eq:angular_coverage_criterion},\,
+            \eqref{eq:vector_coverage_criterion},\,
+            \eqref{eq:geoprotection_condition},\\
+        0, & \text{иначе}.
+    \end{cases}
+    \label{eq:coverage_indicator}
+\end{equation}
+Условие~\eqref{eq:geoprotection_condition} применяется только при учёте
+защиты геостационарных систем. Полуугол поля зрения, участвующий в цепочке проверок при
+вычислении значений индикатора \eqref{eq:coverage_indicator}, задаётся константым значением
+для всех аппартов, либо динамически (в зависимости от $\mathbf{x}$) определяется из условия $\mathrm{SNR}\geq\mathrm{SNR}_{\min}$
+согласно подразделу~\ref{subsec:snr} и затем ограничивается эффективным углом $\alpha^*$
 из~\eqref{eq:effective_fov}.
 
-Обозначим через $A(\mathcal{D})$ площадь произвольной области
-$\mathcal{D}$ на поверхности Земли. Тогда мгновенный показатель покрытия
-определяется как
+Мгновенный показатель покрытия определим через введённый индикатор \eqref{eq:coverage_indicator}
+как
 \begin{equation}
     \mu(t,\mathbf{x})
-    =\frac{A\!\left(\mathcal{C}(t,\mathbf{x})\right)}{A(\mathcal{R})},
+    =\frac{\displaystyle\int_{\mathcal{R}}
+        \chi(Q,t,\mathbf{x})\,\mathrm{d}\sigma(Q)}
+        {\displaystyle\int_{\mathcal{R}}\mathrm{d}\sigma(Q)},
     \qquad \mu(t,\mathbf{x})\in[0,1].
     \label{eq:coverage_metric}
 \end{equation}
-Таким образом, $\mu(t,\mathbf{x})$ представляет долю площади заданной
-области, покрытую группировкой в момент времени $t$.
+где $\mathrm{d}\sigma(Q)$ -- элемент площади земной поверхности.
+В числителе учитывается площадь только покрытых участков, а в знаменателе
+-- площадь всей рассматриваемой области. Поэтому $\mu(t,\mathbf{x})$
+показывает, какая доля площади области покрыта группировкой в момент $t$.
+Например, значение $\mu=0.95$ соответствует покрытию $95\%$ её площади.
+Участки, покрытые несколькими КА, учитываются однократно.
 
 \subsection{Формулировка задачи оптимизации}
 \label{subsec:optimization_formulation}
 
-Пусть $\mathcal{I}=[t_{\mathrm{start}},t_{\mathrm{end}}]$ -- непрерывный
-интервал, на котором требуется обеспечить покрытие. Тогда задача оптимизации
+Пусть $\mathcal{T}=[t_{\mathrm{start}},t_{\mathrm{end}}]$,
+$t_{\mathrm{start}}<t_{\mathrm{end}}$, -- непрерывный интервал времени,
+на котором требуется обеспечить покрытие. Тогда задача оптимизации
 формулируется следующим образом:
 \begin{equation}
 \label{eq:optimization_problem}
 \begin{aligned}
-    \min_{\mathbf{x}}\quad
+    \min_{\mathbf{x}\in\mathcal{X}}\quad
         & J(\mathbf{x}) = SP,\\
     \text{s.t.}\quad
-        & \inf_{t\in\mathcal{I}}\mu(t,\mathbf{x}) = 1,\\
-        & r_{\mathrm{req}} - r_{\min}^{\mathrm{Walker}}(\mathbf{x}) \leq 0,\\
-        & \mathbf{x}_{\mathrm{c}}\in\mathcal{X}_{\mathrm{c}},
-        \qquad \mathbf{x}_{\mathrm{d}}\in\mathcal{X}_{\mathrm{d}},
+        & \inf_{t\in\mathcal{T}}\mu(t,\mathbf{x}) = 1,\\
+        & r_{\min}^{\mathrm{Walker}}(\mathbf{x}) \geq r_{\mathrm{req}}.
 \end{aligned}
 \end{equation}
+Поскольку $0\leq\mu(t,\mathbf{x})\leq1$, первое ограничение требует
+$\mu(t,\mathbf{x})=1$ в каждый момент $t\in\mathcal{T}$, то есть покрытия
+всей площади заданной области на рассматриваемом интервале.
 Таким образом, требуется минимизировать общее число КА при полном покрытии
 области $\mathcal{R}$ на всём рассматриваемом интервале и при соблюдении
 заданного минимального межспутникового расстояния.
