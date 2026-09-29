@@ -3,20 +3,21 @@
 
 One of the fundamental requirements for orbital constellation synthesis in the conducted research is Earth surface specified 
 region coverage control. In the absence of additional constraints, surface point is defined as covered by a spacecraft if it simultaneously 
-satisfies two conditions: the angular criterion for being within the spacecraft field of view (FOV) and the vector criterion for geometric line-of-sight visibility. 
+satisfies two conditions: the angular criterion for being within the spacecraft field of view (FOV), whose effective half-angle is defined by
+\eqref{eq:effective_fov}, and the vector criterion for geometric line-of-sight visibility.
 
 \paragraph{Angular Ground Point Coverage Criterion}
 To satisfy this criterion, the look angle from the spacecraft to the target point $\alpha_v$ must not exceed $\alpha^*$.
 The cosine of this angle is defined by the following expression:
 
-\begin{equation}
+\begin{equation}\label{eq:point_look_angle}
     \cos{\alpha_{v}}=\frac{-\bf{r_S}\cdot\bf{r_{rel}}}{\left|-\bf{r_S}\right|\times\left|\bf{r_{rel}}\right|}.
 \end{equation}
 
 where $\bf{r_S} = (x_S, y_S, z_S)^T$ is the spacecraft position vector, $\bf{r_P} = (x_P, y_P, z_P)^T$ - the ground point position vector, 
 and $\bf{r_{rel}} = \bf{r_P} - \bf{r_S}$ is the line-of-sight vector from the spacecraft to the ground point.
 Consequently, the relationship for the angle cosines is formulated as follows:
-\begin{equation}
+\begin{equation}\label{eq:angular_coverage_criterion}
     \cos{\alpha_v} \geq \cos{\alpha^*}.
 \end{equation}
 
@@ -79,3 +80,8 @@ it is shown that $\lambda_2$ satisfying the vector criterion arises only under t
     (\frac{x_{P}x_{rel}}{R_E^2}+\frac{y_{P}y_{rel}}{R_E^2}+\frac{z_{P}z_{rel}}{R_P^2}) \leq 0.
 \end{equation}
 
+Thus, at a fixed time, a ground point is geometrically covered by a spacecraft if
+conditions~\eqref{eq:angular_coverage_criterion} and
+\eqref{eq:vector_coverage_criterion} hold simultaneously. When protection of
+geostationary systems is required, this pairwise criterion is supplemented by the
+mask introduced in Subsection~\ref{subsec:geoprotection}.
