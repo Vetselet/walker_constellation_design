@@ -1,32 +1,43 @@
-\subsection{Пространственная и временная дискретизация}
+\subsection{Spatial and temporal discretization}
 \label{subsec:coverage_discretization}
 
-Для численной оценки область $\mathcal{R}$ заменяется сеткой H3 заданного
-разрешения. Обозначим через
+Coverage constraint in~\eqref{eq:optimization_problem} is continuous in both space and time. 
+Its direct numerical verification would require evaluating coverage asessment for every point 
+$Q\in\mathcal{R}$ and for every instant $t\in\mathcal{I}$. Since both $\mathcal{R}$ and $\mathcal{I}$ 
+are continuous sets, the verification involves an uncountable set of states and cannot be 
+performed directly within a numerical optimization procedure. Therefore, continuous coverage constraint
+is replaced by a finite numerical approximation obtained by discretizing both spatial and temporal domains.
+
+\paragraph{Spatial discretization}
+
+The continuous region $\mathcal{R}$ is replaced by an H3 grid of a prescribed resolution $\rho$ \cite{h3docs}. 
+H3 provides a hierarchical, hexagonal discretization of the terrestrial surface and belongs to the broader class 
+of discrete global grid systems (DGGS) \cite{sahr2003dggs,ogc_dggs}. Hexagonal spatial representations, including H3-based maps, 
+are also used in telecommunication connectivity analysis \cite{itu_e813}.
+Let
 \begin{equation}
     \mathcal{Q}_{\rho}=\{Q_1,\ldots,Q_{N_{\rho}}\}
     \label{eq:h3_point_set}
 \end{equation}
-множество центров H3-сот разрешения $\rho$, выбранных для рассматриваемой
-области. Для дискретной проверки покрытия усредним
-индикатор~\eqref{eq:coverage_indicator} по этим точкам:
+denote the set of centers of the H3 cells of resolution $\rho$ selected for the region of interest. 
+The spatial resolution is chosen with respect to the characteristics of the payload coverage pattern. 
+For the discrete coverage test, the indicator~\eqref{eq:coverage_indicator} is averaged over the selected points:
 \begin{equation}
     \widehat{\mu}_{\rho}(t,\mathbf{x})=
     \frac{1}{N_{\rho}}\sum_{j=1}^{N_{\rho}}
         \chi(Q_j,t,\mathbf{x}).
     \label{eq:discrete_coverage_metric}
 \end{equation}
-Этот показатель представляет долю покрытых расчётных точек. Для оценки
-доли площади из~\eqref{eq:coverage_metric} вклады точек необходимо взвешивать
-по площадям представляемых ими участков области $\mathcal{R}$.
-При проверке покрытия всех расчётных точек такие веса не влияют на результат.
-Значение $\widehat{\mu}_{\rho}(t,\mathbf{x})=1$ означает, что в момент $t$
-покрыты центры всех выбранных H3-сот. Результат такой оценки зависит от
-разрешения $\rho$: его увеличение повышает пространственную детализацию
-проверки, но требует существенно больших вычислительных затрат.
+This quantity represents the fraction of covered test points. If an approximation of the area fraction 
+in~\eqref{eq:coverage_metric} is required, the individual contributions should additionally be weighted 
+by the areas of the corresponding parts of $\mathcal{R}$. Such weights do not affect the binary condition 
+of global coverage considered here. Thus, $\widehat{\mu}_{\rho}(t,\mathbf{x})=1$ means that the centers of 
+all selected H3 cells are covered at timepoint $t$. Increasing $\rho$ improves the spatial resolution of the 
+verification but also increases the computational cost.
 
-Для проверки покрытия во времени на интервале $\mathcal{T}$ задаётся конечная
-расчётная сетка
+\paragraph{Temporal discretization}
+
+For the temporal verification, the continuous interval $\mathcal{T}$ is replaced by a finite grid:
 \begin{equation}
     \begin{gathered}
         \mathcal{T}_M=\{t_0,t_1,\ldots,t_M\}\subset\mathcal{T},\\
@@ -34,19 +45,29 @@
     \end{gathered}
     \label{eq:time_grid}
 \end{equation}
-Здесь $M\in\mathbb{N}$ -- число временных промежутков, так что сетка
-$\mathcal{T}_M$ содержит $M+1$ расчётных моментов и включает оба конца интервала
-$\mathcal{T}$. Начальная эпоха, границы интервала, модель движения и узлы сетки
-$\mathcal{T}_M$ задаются до начала численного решения. Расстояния между
-соседними моментами времени выбираются
-с учётом характерных угловых масштабов построения, включая расстояние между
-соседними КА и ширину полосы покрытия. В результате условие покрытия из
-задачи~\eqref{eq:optimization_problem} проверяется в дискретном виде:
+Here, $M\in\mathbb{N}$ is the number of temporal subintervals, so that $\mathcal{T}_M$ contains $M+1$ evaluation timepoints 
+and includes both endpoints of $\mathcal{T}$.
+The temporal spacing is selected with respect to the shortest characteristic time scale associated with a potentially 
+critical change in coverage geometry. In the present problem, the relevant scales correspond to the motion 
+over street of coverage half width, the along track separation between adjacent spacecraft within same orbital plane, 
+and the orbital arc affected by the geoprotection constraint. Denoting the corresponding characteristic times by $\tau_{\mathrm{cov}}$, 
+$\tau_{\mathrm{plane}}$, and $\tau_{\mathrm{gp}}$, respectively, define
+\begin{equation}
+    \tau_{\min}=\min\left\{\tau_{\mathrm{cov}},\tau_{\mathrm{plane}},\tau_{\mathrm{gp}}\right\}.
+    \label{eq:min_characteristic_time}
+\end{equation}
+To ensure that each characteristic interval contains several evaluation points, the temporal grid is chosen such that
+\begin{equation}
+    \max_{k=0,\ldots,M-1}\left(t_{k+1}-t_k\right)\leq\frac{\tau_{\min}}{N_t},
+    \label{eq:time_step_condition}
+\end{equation}
+where $N_t$ is a prescribed parameter of temporal resolution.
+The coverage constraint in~\eqref{eq:optimization_problem} is then evaluated in the discrete form:
 \begin{equation}
     \min_{t\in\mathcal{T}_M}
         \widehat{\mu}_{\rho}(t,\mathbf{x})=1.
     \label{eq:discrete_time_coverage}
 \end{equation}
-Это условие означает, что во все моменты расчётной сетки покрыты все
-выбранные центры H3-сот. Покрытие между расчётными точками и моментами
-времени требует отдельной проверки.
+This condition requires all selected H3 cell centers to be covered at every timepoint of the temporal grid. 
+Since it represents a sampled approximation of the original continuous constraint, coverage between adjacent 
+spatial and temporal samples is not guaranteed analytically, and therefore requires additional check.
