@@ -3,7 +3,7 @@
 
 Coverage constraint in~\eqref{eq:optimization_problem} is continuous in both space and time. 
 Its direct numerical verification would require evaluating coverage asessment for every point 
-$Q\in\mathcal{R}$ and for every instant $t\in\mathcal{I}$. Since both $\mathcal{R}$ and $\mathcal{I}$ 
+$Q\in\mathcal{R}$ and for every instant $t\in\mathcal{T}$. Since both $\mathcal{R}$ and $\mathcal{T}$
 are continuous sets, the verification involves an uncountable set of states and cannot be 
 performed directly within a numerical optimization procedure. Therefore, continuous coverage constraint
 is replaced by a finite numerical approximation obtained by discretizing both spatial and temporal domains.
@@ -30,8 +30,8 @@ For the discrete coverage test, the indicator~\eqref{eq:coverage_indicator} is a
 \end{equation}
 This quantity represents the fraction of covered test points. If an approximation of the area fraction 
 in~\eqref{eq:coverage_metric} is required, the individual contributions should additionally be weighted 
-by the areas of the corresponding parts of $\mathcal{R}$. Such weights do not affect the binary condition 
-of global coverage considered here. Thus, $\widehat{\mu}_{\rho}(t,\mathbf{x})=1$ means that the centers of 
+by the areas of the corresponding parts of $\mathcal{R}$. Such weights do not affect whether all selected
+test points are covered. Thus, $\widehat{\mu}_{\rho}(t,\mathbf{x})=1$ means that the centers of
 all selected H3 cells are covered at timepoint $t$. Increasing $\rho$ improves the spatial resolution of the 
 verification but also increases the computational cost.
 
