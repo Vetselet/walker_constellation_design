@@ -1,5 +1,5 @@
 \section{Необходимые условия для полного покрытия с учетом защиты ГСО}
-\label{subsec:geo_protection}
+\label{subsec:geo_condition}
 
 % 
 Для защиты геостационарных спутников (ГСС) вводится запретная область для 
@@ -144,6 +144,7 @@ L = \sqrt{R_E^2 + R_{\text{sat}}^2 - 2 R_E R_{\text{sat}} \cos\theta}.
 \begin{equation}
     \Delta\Omega \leq \Delta\Omega_{\max}.
 \end{equation}
+
 Для выбранного $\Delta\Omega$ фазовый сдвиг дополнительно
 ограничивается допустимыми участками соседней орбиты:
 обслуживающий КА должен находиться внутри зоны обслуживания
@@ -175,3 +176,169 @@ L = \sqrt{R_E^2 + R_{\text{sat}}^2 - 2 R_E R_{\text{sat}} \cos\theta}.
 Полученные ограничения являются необходимыми условиями
 в рамках сферической модели Земли. Их следует применять
 совместно с условиями полного геометрического покрытия.
+
+
+
+\subsection{Уменьшение расстояния между плоскостями}
+
+Вторая стратегия предполагает уменьшение разности ДВУ
+соседних плоскостей $\Delta\Omega$, чтобы при отключении КА
+в запретной области наземную точку обслуживали КА соседних
+орбит. Рассмотрим точку на экваторе, над которой проходит
+основная орбита. Необходимое условие доступности соседней
+орбиты определяется её касанием зоны обслуживания
+(рис.~\ref{fig:geo-26}):
+
+\begin{equation}
+    \Delta\Omega
+    \leq
+    \arcsin\!\left(\frac{\sin\theta}{\sin i}\right).
+    \label{eq:interplane-tangency}
+\end{equation}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.55\linewidth]{pictures/geo-fig-26.png}
+    \caption{Касание соседней орбитой зоны обслуживания
+    экваториальной точки. Основная орбита проходит над точкой;
+    соседняя касается границы зоны обслуживания в точке $B$.
+    Розовая полоса обозначает запретную область.}
+    \label{fig:geo-26}
+\end{figure}
+
+Однако касание само по себе не обеспечивает непрерывного
+обслуживания. Пока КА основной орбиты проходит запретный
+участок, КА соседних орбит должны оставаться внутри зоны
+обслуживания и вне запретной полосы.
+В рассматриваемой конфигурации это требует, чтобы длина
+доступной дуги $\widehat{BB'}$ была не меньше $\alpha$
+(рис.~\ref{fig:geo-28}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.47\linewidth]{pictures/geo-fig-27.png}
+    \hfill
+    \includegraphics[width=0.47\linewidth]{pictures/geo-fig-28.png}
+    \caption{Замещение отключённого КА аппаратами соседних
+    орбит. Слева: допустимый участок $\widehat{BB'}$ внутри
+    зоны обслуживания и вне запретной полосы.
+    Справа: при недостаточной длине этого участка КА2 и КА3
+    выходят из зоны обслуживания до выхода КА1 из запретной
+    области, что приводит к разрыву покрытия.}
+    \label{fig:geo-27}
+    \label{fig:geo-28}
+\end{figure}
+
+Обозначим через $A$ восходящий узел соседней орбиты,
+а через $B$ и $B'$~--- точки её пересечения с границей
+зоны обслуживания. Тогда
+\begin{equation}
+    \widehat{BB'}
+    =
+    \widehat{AB}-\widehat{AB'}
+    =
+    2\arccos\!\left(
+        \frac{\cos\theta}
+        {\sqrt{
+            \cos^2\Delta\Omega
+            +\sin^2\Delta\Omega\cos^2 i
+        }}
+    \right).
+    \label{eq:interplane-arc}
+\end{equation}
+Из граничного условия $\widehat{BB'}=\alpha$ получаем
+\begin{equation}
+    \Delta\Omega_{\max}
+    =
+    \arcsin\!\left(
+        \frac{
+            \sqrt{\cos^2(\alpha/2)-\cos^2\theta}
+        }{
+            \cos(\alpha/2)\sin i
+        }
+    \right),
+    \qquad
+    \Delta\Omega\leq\Delta\Omega_{\max}.
+    \label{eq:interplane-raan}
+\end{equation}
+Выражение применяется при допустимых значениях аргумента
+арксинуса. Нижняя граница $\Delta\Omega$ определяется
+условиями геометрического покрытия между крайними
+плоскостями группировки.
+
+\paragraph{Фазовый сдвиг}
+
+Для выбранного $\Delta\Omega$ допустимые положения КА
+соседней орбиты определяются видимой дугой за исключением
+запретного участка (рис.~\ref{fig:geo-29}).
+Введём
+\begin{align}
+    \eta &=
+    \arccos\!\left(
+        \frac{\cos\theta}
+        {\sqrt{
+            \cos^2\Delta\Omega
+            +\sin^2\Delta\Omega\cos^2 i
+        }}
+    \right),\\
+    \beta &=
+    \arctan\!\left(\tan\Delta\Omega\cos i\right).
+\end{align}
+Угловые расстояния от восходящего узла $A$ до границ
+видимой дуги равны
+\begin{equation}
+    \widehat{AB}=\eta+\beta,
+    \qquad
+    \widehat{AL}=\eta-\beta.
+    \label{eq:interplane-phase-arcs}
+\end{equation}
+
+При соглашении $f=u_{\mathrm{main}}-u_{\mathrm{adj}}$
+допустимые фазовые сдвиги составляют
+\begin{equation}
+    f\in
+    [-\widehat{AB},-\alpha]
+    \,\cup\,
+    [\alpha,\widehat{AL}].
+    \label{eq:interplane-phase}
+\end{equation}
+Первый интервал используется при
+$\widehat{AB}\geq2\alpha$, второй~--- при
+$\widehat{AL}\geq2\alpha$.
+Первое условие обеспечивается выбранной границей
+$\Delta\Omega_{\max}$ в рассматриваемой конфигурации.
+Если второе условие не выполняется, остаётся только
+интервал $[-\widehat{AB},-\alpha]$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.55\linewidth]{pictures/geo-fig-29.png}
+    \caption{Допустимые положения КА соседней орбиты.
+    Точки $B$ и $L$ ограничивают видимую дугу,
+    $A$~--- восходящий узел. Зелёным выделены участки
+    внутри зоны обслуживания и вне запретной полосы,
+    определяющие допустимые фазовые сдвиги.}
+    \label{fig:geo-29}
+\end{figure}
+
+Ограничение $\widehat{AL}\geq2\alpha$ означает, что
+доступная дуга под экватором имеет длину
+$\widehat{AL}-\alpha\geq\alpha$.
+При меньшей длине обслуживающий КА может покинуть зону
+обслуживания раньше, чем КА основной орбиты выйдет
+из запретной области (рис.~\ref{fig:geo-30}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.55\linewidth]{pictures/geo-fig-30.png}
+    \caption{Разрыв покрытия при недостаточной длине
+    допустимого участка соседней орбиты под экватором:
+    обслуживающие КА выходят из зоны обслуживания,
+    пока КА основной орбиты остаётся в запретной области.}
+    \label{fig:geo-30}
+\end{figure}
+
+Условия \eqref{eq:interplane-raan} и~\eqref{eq:interplane-phase}
+являются необходимыми в рассматриваемой модели
+и применяются совместно с условиями полного
+геометрического покрытия.
